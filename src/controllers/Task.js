@@ -13,11 +13,9 @@ class Tasks {
         }
     
         try {
-            await Task.create(task);
+            const createdTask = await Task.create(task);
     
-            res.status(201).json({
-                message: "Tarefa adicionada"
-            })
+            res.status(201).json(createdTask)
         } catch(err) {
             res.status(500).json({
                 error: err
@@ -75,9 +73,7 @@ class Tasks {
                 })
             }
     
-            res.status(200).json({
-                message: "Tarefa editada"
-            })
+            res.status(200).json(await Task.findOne({_id: id}))
         } catch(err) {
             res.status(500).json({
                 error: err
@@ -89,19 +85,19 @@ class Tasks {
         const id = req.params.id
     
         try {
-            const deletedTask = await Task.deleteOne({
-                _id: id
-            })
+            const deletedTask = await Task.findOne({_id: id});
     
-            if(deletedTask.deletedCount == 0) {
+            if(!deletedTask) {
                 return res.status(422).json({
                     error: "Tarefa não encontrada"
                 })
             }
-    
-            res.status(200).json({
-                message: "Tarefa excluída"
+
+            await Task.deleteOne({
+                _id: id
             })
+
+            res.status(200).json(deletedTask)
         } catch(err) {
             res.status(500).json({
                 error: err
