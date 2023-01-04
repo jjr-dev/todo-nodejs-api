@@ -22,7 +22,11 @@ class Tasks {
     }
 
     async List(req, res) {
-        const findedTasks = await Task.List()
+        const data = {
+            user_id: req.user_id
+        }
+
+        const findedTasks = await Task.List(data)
     
         if(findedTasks.error)
             return res.status(findedTasks.error.status).json(findedTasks.error.msg)
@@ -32,7 +36,8 @@ class Tasks {
 
     async getOne(req, res) {
         const data = {
-            id: req.params.id
+            id: req.params.id,
+            user_id: req.user_id
         }
     
         const findedTask = await Task.getOne(data)
@@ -44,7 +49,7 @@ class Tasks {
     }
 
     async Update(req, res) {
-        const data = Object.assign(req.params, req.body);
+        const data = Object.assign(req.params, req.body, {user_id: req.user_id});
 
         const updatedTask = await Task.Update(data)
     
@@ -56,7 +61,8 @@ class Tasks {
 
     async Delete(req, res) {
         const data = {
-            id: req.params.id
+            id: req.params.id,
+            user_id: req.user_id
         }
     
         const deletedTask = await Task.Delete(data)

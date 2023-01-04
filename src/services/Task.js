@@ -14,9 +14,9 @@ class Tasks {
         }
     }
 
-    async List() {
+    async List(data) {
         try {
-            return await Task.find()
+            return await Task.find({user_id: data.user_id})
         } catch(err) {
             return {
                 error: {
@@ -30,7 +30,8 @@ class Tasks {
     async getOne(data) {
         try {
             const task = await Task.findOne({
-                _id: data.id
+                _id: data.id,
+                user_id: data.user_id
             })
     
             if(!task) {
@@ -56,7 +57,8 @@ class Tasks {
     async Update(data) {
         try {
             const updatedTask = await Task.updateOne({
-                _id: data.id
+                _id: data.id,
+                user_id: data.user_id
             }, data)
     
             if(updatedTask.matchedCount == 0) {
@@ -81,7 +83,7 @@ class Tasks {
 
     async Delete(data) {
         try {
-            const deletedTask = await Task.findOne({_id: data.id})
+            const deletedTask = await Task.findOne({_id: data.id, user_id: data.user_id})
     
             if(!deletedTask) {
                 return {
