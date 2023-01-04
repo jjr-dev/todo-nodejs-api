@@ -1,7 +1,8 @@
 const router = require('express').Router()
 const Task   = require('../controllers/Task') 
+const Auth   = require('../controllers/Auth')
 
-router.post('/', Task.Create)
+router.post('/', Auth.checkToken, Task.Create)
 
 router.get('/', Task.List)
 

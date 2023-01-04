@@ -2,11 +2,9 @@ const Task = require('../services/Task')
 
 class Tasks {
     async Create(req, res) {
-        const user = 123;
-        
-        const task = {
+        const data = {
             name: req.body.name,
-            user_id: user
+            user_id: req.user_id
         }
     
         if(!data.name) {

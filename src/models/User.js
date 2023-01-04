@@ -1,16 +1,16 @@
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema({
-    name: {
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
         type: String,
         required: true
     },
-    checked: {
-        type: Boolean,
-        required: true,
-        default: false
-    },
-    user_id: {
+    name: {
         type: String,
         required: true
     }
@@ -18,4 +18,4 @@ const Schema = mongoose.Schema({
 
 Schema.set('timestamps', true);
 
-module.exports = mongoose.model('Task', Schema)
+module.exports = mongoose.model('User', Schema)
