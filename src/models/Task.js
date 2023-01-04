@@ -10,9 +10,9 @@ const taskSchema = mongoose.Schema({
         required: true,
         default: false
     },
-    completedAt: {
-        type: Date,
-        default: null
+    user_id: {
+        type: String,
+        required: true
     }
 })
 

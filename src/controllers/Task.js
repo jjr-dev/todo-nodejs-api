@@ -2,8 +2,11 @@ const Task = require('../models/Task')
 
 class Tasks {
     async Create(req, res) {
+        const user = 123;
+        
         const task = {
-            name: req.body.name
+            name: req.body.name,
+            user_id: user
         }
     
         if(!task.name) {
