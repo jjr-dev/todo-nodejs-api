@@ -46,13 +46,15 @@ class Tasks {
     }
 
     async Update(req, res) {
-        const data = Object.assign(req.params, req.body, {user_id: req.user_id});
+        const data = {
+            id: req.params.id,
+            name: req.body.name,
+            checked: req.body.checked,
+            user_id: req.user_id
+        }
 
         if(!data.name)
             return res.status(422).json({error: "Nome obrigatório"})
-
-        if(!data.checked)
-            return res.status(422).json({error: "Marcação obrigatória"})
 
         const updatedTask = await Task.Update(data)
     
@@ -63,7 +65,12 @@ class Tasks {
     }
 
     async partialUpdate(req, res) {
-        const data = Object.assign(req.params, req.body, {user_id: req.user_id});
+        const data = {
+            id: req.params.id,
+            name: req.body.name,
+            checked: req.body.checked,
+            user_id: req.user_id
+        }
 
         const updatedTask = await Task.Update(data)
     
