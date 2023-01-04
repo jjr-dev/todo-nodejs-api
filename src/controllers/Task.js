@@ -16,7 +16,7 @@ class Tasks {
         const createdTask = await Task.Create(data)
     
         if(createdTask.error)
-            return res.status(createdTask.error.status).json(createdTask.error.msg)
+            return res.status(createdTask.error.status).json({error: createdTask.error.msg})
 
         res.status(201).json(createdTask)
     }
@@ -29,7 +29,7 @@ class Tasks {
         const findedTasks = await Task.List(data)
     
         if(findedTasks.error)
-            return res.status(findedTasks.error.status).json(findedTasks.error.msg)
+            return res.status(findedTasks.error.status).json({error: findedTasks.error.msg})
 
         res.status(201).json(findedTasks)
     }
@@ -43,7 +43,7 @@ class Tasks {
         const findedTask = await Task.getOne(data)
 
         if(findedTask.error)
-            return res.status(findedTask.error.status).json(findedTask.error.msg)
+            return res.status(findedTask.error.status).json({error: findedTask.error.msg})
 
         res.status(200).json(findedTask)
     }
@@ -54,7 +54,7 @@ class Tasks {
         const updatedTask = await Task.Update(data)
     
         if(updatedTask.error)
-            return res.status(updatedTask.error.status).json(updatedTask.error.msg)
+            return res.status(updatedTask.error.status).json({error: updatedTask.error.msg})
 
         res.status(201).json(updatedTask)
     }
@@ -68,7 +68,7 @@ class Tasks {
         const deletedTask = await Task.Delete(data)
 
         if(deletedTask.error)
-            return res.status(deletedTask.error.status).json(deletedTask.error.msg)
+            return res.status(deletedTask.error.status).json({error: deletedTask.error.msg})
 
         res.status(201).json(deletedTask)
     }
