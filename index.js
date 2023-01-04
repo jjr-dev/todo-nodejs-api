@@ -1,7 +1,7 @@
 // Configurações
 require('dotenv').config();
 
-const express  = require('express');
+const express = require('express');
 
 const app  = express();
 const port = 3000;
@@ -24,5 +24,9 @@ connectDatabase();
 
 // Rotas
 const taskRoutes = require('./src/routes/Task')
+const authRoutes = require('./src/routes/Auth')
+const userRoutes = require('./src/routes/User')
 
 app.use('/task', taskRoutes);
+app.use('/user', userRoutes);
+app.use('/auth', authRoutes);
