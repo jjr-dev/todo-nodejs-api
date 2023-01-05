@@ -2,15 +2,16 @@ const Task = require('../services/Task')
 
 class Tasks {
     async Create(req, res) {
-        const data = {
-            name: req.body.name,
-            user_id: req.user_id
-        }
+        const { name } = req.body
+        const user_id = req.user_id
     
-        if(!data.name)
+        if(!name)
             return res.status(422).json({error: "Nome obrigatório"})
 
-        const createdTask = await Task.Create(data)
+        const createdTask = await Task.Create({
+            name,
+            user_id
+        })
     
         if(createdTask.error)
             return res.status(createdTask.error.status).json({error: createdTask.error.msg})
@@ -19,11 +20,9 @@ class Tasks {
     }
 
     async List(req, res) {
-        const data = {
-            user_id: req.user_id
-        }
+        const user_id = req.user_id
 
-        const findedTasks = await Task.List(data)
+        const findedTasks = await Task.List({user_id})
     
         if(findedTasks.error)
             return res.status(findedTasks.error.status).json({error: findedTasks.error.msg})
@@ -32,12 +31,13 @@ class Tasks {
     }
 
     async getOne(req, res) {
-        const data = {
-            id: req.params.id,
-            user_id: req.user_id
-        }
+        const { id } = req.params
+        const user_id = req.user_id
     
-        const findedTask = await Task.getOne(data)
+        const findedTask = await Task.getOne({
+            id,
+            user_id
+        })
 
         if(findedTask.error)
             return res.status(findedTask.error.status).json({error: findedTask.error.msg})
@@ -46,17 +46,19 @@ class Tasks {
     }
 
     async Update(req, res) {
-        const data = {
-            id: req.params.id,
-            name: req.body.name,
-            checked: req.body.checked,
-            user_id: req.user_id
-        }
+        const { name, checked } = req.body
+        const id = req.params.id
+        const user_id = req.user_id
 
-        if(!data.name)
+        if(!name)
             return res.status(422).json({error: "Nome obrigatório"})
 
-        const updatedTask = await Task.Update(data)
+        const updatedTask = await Task.Update({
+            id,
+            name,
+            checked,
+            user_id
+        })
     
         if(updatedTask.error)
             return res.status(updatedTask.error.status).json({error: updatedTask.error.msg})
@@ -65,14 +67,16 @@ class Tasks {
     }
 
     async partialUpdate(req, res) {
-        const data = {
-            id: req.params.id,
-            name: req.body.name,
-            checked: req.body.checked,
-            user_id: req.user_id
-        }
+        const { name, checked } = req.body
+        const id = req.params.id
+        const user_id = req.user_id
 
-        const updatedTask = await Task.Update(data)
+        const updatedTask = await Task.Update({
+            id,
+            name,
+            checked,
+            user_id
+        })
     
         if(updatedTask.error)
             return res.status(updatedTask.error.status).json({error: updatedTask.error.msg})
@@ -81,12 +85,13 @@ class Tasks {
     }
 
     async Delete(req, res) {
-        const data = {
-            id: req.params.id,
-            user_id: req.user_id
-        }
+        const { id } = req.params
+        const user_id = req.user_id
     
-        const deletedTask = await Task.Delete(data)
+        const deletedTask = await Task.Delete({
+            id,
+            user_id
+        })
 
         if(deletedTask.error)
             return res.status(deletedTask.error.status).json({error: deletedTask.error.msg})
