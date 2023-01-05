@@ -8,7 +8,7 @@ router.get('/', Auth.checkToken, Task.List)
 
 router.get('/:id', Auth.checkToken, Task.getOne)
 
-router.patch('/:id', Auth.checkToken, Task.Update)
+router.patch('/:id', Auth.checkToken, Task.partialUpdate)
 
 router.put('/:id', Auth.checkToken, Task.Update)
 

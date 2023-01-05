@@ -7,11 +7,8 @@ class Tasks {
             user_id: req.user_id
         }
     
-        if(!data.name) {
-            return res.status(422).json({
-                error: "Nome obrigatório"
-            })
-        }
+        if(!data.name)
+            return res.status(422).json({error: "Nome obrigatório"})
 
         const createdTask = await Task.Create(data)
     
@@ -49,7 +46,31 @@ class Tasks {
     }
 
     async Update(req, res) {
-        const data = Object.assign(req.params, req.body, {user_id: req.user_id});
+        const data = {
+            id: req.params.id,
+            name: req.body.name,
+            checked: req.body.checked,
+            user_id: req.user_id
+        }
+
+        if(!data.name)
+            return res.status(422).json({error: "Nome obrigatório"})
+
+        const updatedTask = await Task.Update(data)
+    
+        if(updatedTask.error)
+            return res.status(updatedTask.error.status).json({error: updatedTask.error.msg})
+
+        res.status(201).json(updatedTask)
+    }
+
+    async partialUpdate(req, res) {
+        const data = {
+            id: req.params.id,
+            name: req.body.name,
+            checked: req.body.checked,
+            user_id: req.user_id
+        }
 
         const updatedTask = await Task.Update(data)
     
